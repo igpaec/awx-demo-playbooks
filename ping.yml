@@ -1,0 +1,11 @@
+---
+# The simplest possible job. Proves your Project, Inventory, and Job Template
+# are wired together and that AWX can execute a play end to end.
+- name: Hello from AWX
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Print a friendly message
+      ansible.builtin.debug:
+        msg: "Hello from AWX! If you can read this in the job output, everything works."

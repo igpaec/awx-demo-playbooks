@@ -1,0 +1,20 @@
+---
+# Demonstrates Surveys and extra variables. The three vars below are defaults;
+# in AWX you will override them with a Survey (a form shown at launch time) or
+# with "Extra Variables" on the Job Template. Watch how prompted input flows
+# straight into the play.
+- name: Survey demo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    greeting: "Hello"
+    target_name: "World"
+    repeat_count: 1
+  tasks:
+    - name: Greet using the survey input
+      ansible.builtin.debug:
+        msg: "{{ greeting }}, {{ target_name }}!"
+      loop: "{{ range(0, repeat_count | int) | list }}"
+      loop_control:
+        label: "iteration {{ item + 1 }}"

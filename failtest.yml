@@ -1,0 +1,23 @@
+---
+# Flip should_fail to control the outcome. Use this to see how AWX shows
+# Successful vs Failed jobs, how failures look in the output, and (later)
+# how a Workflow can branch differently on success vs failure.
+- name: Pass or fail on demand
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    should_fail: false
+  tasks:
+    - name: This task always runs
+      ansible.builtin.debug:
+        msg: "Starting the job. should_fail is currently: {{ should_fail }}"
+
+    - name: Fail intentionally when requested
+      ansible.builtin.fail:
+        msg: "Failing on purpose because should_fail = true."
+      when: should_fail | bool
+
+    - name: This only runs when the job did not fail
+      ansible.builtin.debug:
+        msg: "Reached the end successfully."
