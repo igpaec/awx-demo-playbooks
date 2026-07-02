@@ -1,7 +1,7 @@
 ---
 # Flip should_fail to control the outcome. Use this to see how AWX shows
-# Successful vs Failed jobs, how failures look in the output, and (later)
-# how a Workflow can branch differently on success vs failure.
+# Successful vs Failed jobs and how failures look in the output — the same
+# statuses then surface in Nautobot's job results in Part 3.
 - name: Pass or fail on demand
   hosts: localhost
   connection: local

@@ -1,8 +1,7 @@
 ---
-# Demonstrates Surveys and extra variables. The three vars below are defaults;
-# in AWX you will override them with a Survey (a form shown at launch time) or
-# with "Extra Variables" on the Job Template. Watch how prompted input flows
-# straight into the play.
+# Demonstrates Surveys and extra variables — and, in Part 3, how each AWX survey
+# answer type becomes a matching Nautobot form field. The vars below are just
+# defaults; a Survey (a form shown at launch) or "Extra Variables" override them.
 - name: Survey demo
   hosts: localhost
   connection: local
@@ -11,10 +10,12 @@
     greeting: "Hello"
     target_name: "World"
     repeat_count: 1
+    deploy_env: "dev"
+    shout: "no"
   tasks:
     - name: Greet using the survey input
       ansible.builtin.debug:
-        msg: "{{ greeting }}, {{ target_name }}!"
+        msg: "{{ greeting }}, {{ target_name }}!{{ ' (SHOUTING)' if shout == 'yes' else '' }} [env: {{ deploy_env }}]"
       loop: "{{ range(0, repeat_count | int) | list }}"
       loop_control:
         label: "iteration {{ item + 1 }}"
